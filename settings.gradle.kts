@@ -23,6 +23,9 @@ pluginManagement {
         id("com.android.library").version(agpVersion)
 
         id("org.jetbrains.compose").version(composeVersion)
+
+        // IR added
+        id("org.jetbrains.kotlin.plugin.serialization").version(kotlinVersion)
     }
 }
 

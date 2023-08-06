@@ -3,6 +3,7 @@ plugins {
     kotlin("native.cocoapods")
     id("com.android.library")
     id("org.jetbrains.compose")
+    id("kotlinx-serialization")
 }
 
 kotlin {
@@ -33,6 +34,16 @@ kotlin {
                 implementation(compose.material)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
+
+                // IR Added
+                implementation(kotlin("stdlib-common"))
+                implementation(Coroutines.Core.core)
+                implementation(Ktor.Core.common)
+                implementation(Ktor.Json.common)
+                implementation(Ktor.Logging.common)
+                implementation(Ktor.Serialization.common)
+                implementation(Ktor.Serialization.content)
+                implementation(Ktor.Serialization.json)
             }
         }
         val androidMain by getting {
@@ -40,6 +51,17 @@ kotlin {
                 api("androidx.activity:activity-compose:1.6.1")
                 api("androidx.appcompat:appcompat:1.6.1")
                 api("androidx.core:core-ktx:1.9.0")
+
+                // IR Added
+                implementation(kotlin("stdlib"))
+                implementation(Coroutines.Core.core)
+                implementation(Ktor.android)
+                implementation(Ktor.Android.okHttp)
+                implementation(Ktor.Core.jvm)
+                implementation(Ktor.Json.jvm)
+                implementation(Ktor.Logging.jvm)
+                implementation(Ktor.Logging.slf4j)
+                implementation(Ktor.Mock.jvm)
             }
         }
         val iosX64Main by getting
@@ -50,13 +72,18 @@ kotlin {
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
+
+            // IR Added
+            dependencies {
+                implementation(Ktor.Ios.darvin)
+            }
         }
     }
 }
 
 android {
     compileSdk = (findProperty("android.compileSdk") as String).toInt()
-    namespace = "com.myapplication.common"
+    namespace = "com.inrhythm.lightningtalk"
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     sourceSets["main"].res.srcDirs("src/androidMain/res")
