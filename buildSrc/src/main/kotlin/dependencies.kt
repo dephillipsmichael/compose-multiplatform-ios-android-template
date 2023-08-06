@@ -10,12 +10,12 @@ object Versions {
   const val compileSdk = 33
   const val kotlinCompilerExtension = "1.4.4"
   const val coroutines = "1.6.4"
-  const val kotlin = "1.3.72"
+  const val kotlin = "1.9.0"
   const val ktor = "2.2.3"
   const val serialization = "0.20.0"
   const val slf4j = "1.7.30"
   const val koinCore    = "3.3.0"
-  const val moko = "0.22.2"
+  const val kamel = "0.7.1"
 }
 
 object AndroidX {
@@ -93,4 +93,8 @@ object Serialization {
       "org.jetbrains.kotlinx:kotlinx-serialization-runtime:${Versions.serialization}"
   const val runtimeNative =
       "org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:${Versions.serialization}"
+}
+
+object Kamel {
+  const val asyncImage = "media.kamel:kamel-image:${Versions.kamel}"
 }

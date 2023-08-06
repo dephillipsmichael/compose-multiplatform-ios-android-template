@@ -1,4 +1,5 @@
 
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,10 +22,14 @@ import androidx.compose.material.icons.outlined.Info
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import io.kamel.image.KamelImage
+import io.kamel.image.asyncPainterResource
 
 @Composable
 @ExperimentalMaterialApi
@@ -36,7 +41,8 @@ fun ArticlesListView(articles: List<Article>, onSelect: (Article) -> Unit) {
                 onClick = { onSelect(article) },
                 modifier = Modifier
                     .padding(4.dp)
-                    .heightIn(max = 192.dp),
+                    .heightIn(max = 192.dp)
+                    .focusProperties { canFocus = false },
                 shape = MaterialTheme.shapes.medium.copy(
                     all = CornerSize(12.dp)
                 ),
@@ -44,19 +50,14 @@ fun ArticlesListView(articles: List<Article>, onSelect: (Article) -> Unit) {
                 elevation = 2.dp
             ) {
                 Box(modifier = Modifier.fillMaxSize()) {
-                    // TODO replace async image
-//                    AsyncImage(
-//                        modifier = Modifier
-//                            .fillMaxWidth()
-//                            .alpha(0.2f),
-//                        model = ImageRequest.Builder(LocalContext.current)
-//                            .data(article.thumbnail)
-//                            .crossfade(true)
-//                            .size(Size.ORIGINAL)
-//                            .build(),
-//                        contentDescription = null,
-//                        contentScale = ContentScale.Crop
-//                    )
+                    KamelImage(
+                        modifier = Modifier.fillMaxWidth(),
+                        resource = asyncPainterResource(data = article.thumbnail as Any),
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        alpha = 0.2f,
+                        animationSpec = tween()
+                    )
                     Column(
                         modifier = Modifier.padding(4.dp),
                         verticalArrangement = Arrangement.SpaceBetween

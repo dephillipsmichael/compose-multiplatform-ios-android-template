@@ -123,7 +123,7 @@ fun App() {
                     title = articleDetail?.title
                     ArticleDetail(
                         article = articleDetail,
-                        author = authorsState?.authorList?.first {
+                        author = authorsState?.authorList?.firstOrNull() {
                             it.id == articleDetail?.authorId
                         },
                         openUrl = { articleUri ->
@@ -163,5 +163,3 @@ private fun LoadingView() {
         CircularProgressIndicator()
     }
 }
-
-expect fun getPlatformName(): String

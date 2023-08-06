@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.plugin.kotlinToolingVersion
+
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
@@ -44,6 +46,7 @@ kotlin {
                 implementation(Ktor.Serialization.common)
                 implementation(Ktor.Serialization.content)
                 implementation(Ktor.Serialization.json)
+                implementation(Kamel.asyncImage)
             }
         }
         val androidMain by getting {
@@ -62,6 +65,9 @@ kotlin {
                 implementation(Ktor.Logging.jvm)
                 implementation(Ktor.Logging.slf4j)
                 implementation(Ktor.Mock.jvm)
+
+                // UI Tooling
+                implementation(compose.uiTooling)
             }
         }
         val iosX64Main by getting
@@ -93,11 +99,21 @@ android {
         minSdk = (findProperty("android.minSdk") as String).toInt()
         targetSdk = (findProperty("android.targetSdk") as String).toInt()
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.0"
     }
+
+    buildFeatures {
+        compose = true
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
     kotlin {
-        jvmToolchain(11)
+        jvmToolchain(17)
     }
 }
